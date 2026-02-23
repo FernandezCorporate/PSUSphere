@@ -36,6 +36,7 @@ class OrganizationList(ListView):
   context_object_name = 'organization'
   template_name = 'org_list.html'
   paginate_by = 5
+  ordering = ["college__college_name","name"]
 
   def get_queryset(self):
     qs = super().get_queryset()
@@ -66,10 +67,10 @@ class OrganizationDeleteView(DeleteView):
   success_url = reverse_lazy('organization-list')
 
 class MembersListView(ListView):
-   model = OrgMember
-   context_object_name = 'member'
-   template_name = 'member_list.html'
-   paginate_by = 5
+  model = OrgMember
+  context_object_name = 'member'
+  template_name = 'member_list.html'
+  paginate_by = 5
 
 class MembersCreateView(CreateView):
   model = OrgMember
@@ -78,10 +79,10 @@ class MembersCreateView(CreateView):
   success_url = reverse_lazy('member-list')
 
 class MembersUpdateView(UpdateView):
-   model = OrgMember
-   form_class = MemberForm
-   template_name = 'member_form.html'
-   success_url = reverse_lazy('member-list')
+  model = OrgMember
+  form_class = MemberForm
+  template_name = 'member_form.html'
+  success_url = reverse_lazy('member-list')
 
 class MembersDeleteView(DeleteView):
   model = OrgMember
@@ -89,10 +90,10 @@ class MembersDeleteView(DeleteView):
   success_url = reverse_lazy('member-list')
 
 class StudentListView(ListView):
-   model = Student
-   context_object_name = 'student'
-   template_name = 'student_list.html'
-   paginate_by = 5
+  model = Student
+  context_object_name = 'student'
+  template_name = 'student_list.html'
+  paginate_by = 5
 
 class StudentCreateView(CreateView):
   model = Student
@@ -101,10 +102,10 @@ class StudentCreateView(CreateView):
   success_url = reverse_lazy('student-list')
 
 class StudentUpdateView(UpdateView):
-   model = Student
-   form_class = StudentForm
-   template_name = 'student_form.html'
-   success_url = reverse_lazy('student-list')
+  model = Student
+  form_class = StudentForm
+  template_name = 'student_form.html'
+  success_url = reverse_lazy('student-list')
 
 class StudentDeleteView(DeleteView):
   model = Student
@@ -112,10 +113,10 @@ class StudentDeleteView(DeleteView):
   success_url = reverse_lazy('student-list')
 
 class CollegeListView(ListView):
-   model = College
-   context_object_name = 'college'
-   template_name = 'college_list.html'
-   paginate_by = 5
+  model = College
+  context_object_name = 'college'
+  template_name = 'college_list.html'
+  paginate_by = 5
 
 class CollegeCreateView(CreateView):
   model = College
@@ -124,10 +125,10 @@ class CollegeCreateView(CreateView):
   success_url = reverse_lazy('college-list')
 
 class CollegeUpdateView(UpdateView):
-   model = College
-   form_class = CollegeForm
-   template_name = 'college_form.html'
-   success_url = reverse_lazy('college-list')
+  model = College
+  form_class = CollegeForm
+  template_name = 'college_form.html'
+  success_url = reverse_lazy('college-list')
 
 class CollegeDeleteView(DeleteView):
   model = College
@@ -135,10 +136,17 @@ class CollegeDeleteView(DeleteView):
   success_url = reverse_lazy('college-list')
 
 class ProgramListView(ListView):
-   model = Program
-   context_object_name = 'program'
-   template_name = 'program_list.html'
-   paginate_by = 5
+  model = Program
+  context_object_name = 'program'
+  template_name = 'program_list.html'
+  paginate_by = 5
+   
+  def get_ordering(self):
+    allowed = ["prog_name", "college__college_name"]
+    sort_by = self.request.GET.get("sort_by")
+    if sort_by in allowed:
+      return sort_by
+    return "prog_name"
 
 class ProgramCreateView(CreateView):
   model = Program
@@ -147,10 +155,10 @@ class ProgramCreateView(CreateView):
   success_url = reverse_lazy('program-list')
 
 class ProgramUpdateView(UpdateView):
-   model = Program
-   form_class = ProgramForm
-   template_name = 'program_form.html'
-   success_url = reverse_lazy('program-list')
+  model = Program
+  form_class = ProgramForm
+  template_name = 'program_form.html'
+  success_url = reverse_lazy('program-list')
 
 class ProgramDeleteView(DeleteView):
   model = Program
