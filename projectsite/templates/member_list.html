@@ -14,6 +14,7 @@
                   <form class="navbar-left navbar-form nav-search mr-md-3" action="{% url 'member-list' %}">
                     <div class="input-group">
                       <input type="text" placeholder="Search ..." class="form-control" name="q"/>
+					  <input type="hidden" name="sort_by" value="{{ request.GET.sort_by|default:'student__lastname' }}">
                       <div class="input-group-append">
                         <span class="input-group-text">
                           <i class="la la-search search-icon"></i>
@@ -39,6 +40,7 @@
 							<option value="date_joined" {% if request.GET.sort_by == "date_joined" %}selected{% endif %}>Date Joined</option>
 						</select>
 					</div>
+					<input type="hidden" name="q" value="{{ request.GET.q }}">
 					<div class="col-auto">
 						<button type="submit" class="btn btn-primary btn-sm btn-rounded">Sort</button>
 					</div>
